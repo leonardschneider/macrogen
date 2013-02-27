@@ -58,6 +58,14 @@ class TupleTest extends SpecificationWithJUnit {
     "reduce right with a lambda expression" in {
       mkTuple((1, 2.0, 3f, 4)).reduceRight(_ - _) must beEqualTo(-2.0)
     }
+
+    "fold left with a lambda expression" in {
+      mkTuple((1, 2.0, 3f, 4)).foldLeft(-2.0)(_ + _) must beEqualTo(8.0)
+    }
+
+    "fold right with a lambda expression" in {
+      mkTuple((1, 2.0, 3f, 4)).foldRight(-2.0)(_ - _) must beEqualTo(-4.0)
+    }
     
 
   }

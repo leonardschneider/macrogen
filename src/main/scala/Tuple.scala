@@ -152,6 +152,32 @@ trait TupleMacros extends Macro {
     c.Expr(q"{${ops[Tup].decl}; $tree}")(c.WeakTypeTag(tpe))
   }
 
+  def foldLeft[Tup: WeakTypeTag, T: WeakTypeTag](t: Expr[T])(f: Tree) = {
+    val tpe0 = c.typeCheck(t.tree.duplicate).tpe
+    //c.echo(NoPosition, "tpe0 " + tpe0)
+    val (tree, tpe) = (ops[Tup].fields zip ops[Tup].tpes).foldLeft((t.tree, tpe0))((t1, t2) => {
+      val (tree1, tpe1) = t1
+      val (tree2, tpe2) = t2
+      val tree = q"macrogen.InferFunction2[$tpe1, $tpe2].infer(${f.duplicate})($tree1, $tree2)"
+      val tpe = c.typeCheck(q"{${ops[Tup].decl}; ${tree.duplicate}}").tpe
+      (tree, tpe)
+    })
+    c.Expr(q"{${ops[Tup].decl}; $tree}")(c.WeakTypeTag(tpe))
+  }
+
+  def foldRight[Tup: WeakTypeTag, T: WeakTypeTag](t: Expr[T])(f: Tree) = {
+    val tpe0 = c.typeCheck(t.tree.duplicate).tpe
+    //c.echo(NoPosition, "tpe0 " + tpe0)
+    val (tree, tpe) = (ops[Tup].fields zip ops[Tup].tpes).foldRight((t.tree, tpe0))((t1, t2) => {
+      val (tree1, tpe1) = t1
+      val (tree2, tpe2) = t2
+      val tree = q"macrogen.InferFunction2[$tpe1, $tpe2].infer(${f.duplicate})($tree1, $tree2)"
+      val tpe = c.typeCheck(q"{${ops[Tup].decl}; ${tree.duplicate}}").tpe
+      (tree, tpe)
+    })
+    c.Expr(q"{${ops[Tup].decl}; $tree}")(c.WeakTypeTag(tpe))
+  }
+
 
   // Implicit conversion macro implementation
 
@@ -194,8 +220,8 @@ class Tuple[Tup](val tup: Tup) {
   def map(f: _): Any = macro TupleMacros.map[Tup]
   def reduceLeft(f: _): Any = macro TupleMacros.reduceLeft[Tup]
   def reduceRight(f: _): Any = macro TupleMacros.reduceRight[Tup]
-  //def foldLeft(f: _): Any = macro TupleMacros.foldLeft[Tup]
-  //def foldRight(f: _): Any = macro TupleMacros.foldRight[Tup]
+  def foldLeft[T](t: T)(f: _): Any = macro TupleMacros.foldLeft[Tup, T]
+  def foldRight[T](t: T)(f: _): Any = macro TupleMacros.foldRight[Tup, T]
   //def zipMap[Tup2](tup2: Tuple[Tup2]. f: _): Any = macro TupleMacros.zip[Tup]
 }
 
