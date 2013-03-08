@@ -114,3 +114,36 @@ SelfType
 When mixing the SelfType trait, a type `Self <:` the inheriting trait is automatically declared.  
 
 
+Type Operators
+--------------
+
+Type operators complete usual type relationship testing, such as `=:=`, `<:<`, `>:>`, `<%<` with
+their negation `=:!=`, `<:!<`, `>:!>`, `<%!<`.
+
+It also brings way to combine those thanks to `!:!` (type negation), `&:&` and `|:|`.
+
+Example RELP session.
+
+```scala
+scala> import macrogen.TypeOperators._
+import macrogen.TypeOperators._
+
+scala> trait A
+defined trait A
+
+scala> trait B
+defined trait B
+
+scala> implicitly[A =:!= B]
+res0: macrogen.TypeOperators.=:!=[A,B] = $anon$1@1106d26c
+
+scala> type A_alias = A
+defined type alias A_alias
+
+scala> implicitly[A =:!= A_alias] // oops
+<console>:13: error: could not find implicit value for parameter e: macrogen.TypeOperators.=:!=[A,A_alias]
+              implicitly[A =:!= A_alias] // oops
+
+```
+
+
