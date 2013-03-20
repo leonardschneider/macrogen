@@ -19,6 +19,12 @@ class TupleTest extends SpecificationWithJUnit {
       (1, "two") :+ 3.0 must beEqualTo((1, "two", 3.0))
     }
 
+    /* Pending until fixed
+    "append element twice" in {
+      (1, "two") :+ 3.0 :+ 4 must beEqualTo((1, "two", 3.0, 4))
+    }
+    */
+
     "append tuple" in {
       (1, "two", 3.0) ++ mkTuple((4, "five", 6.0)) must beEqualTo((1, "two", 3.0, 4, "five", 6.0))
     }
