@@ -113,6 +113,23 @@ SelfType
 
 When mixing the SelfType trait, a type `Self <:` the inheriting trait is automatically declared.  
 
+TypeOf
+------
+
+This type macro allows to get the type of an expression and use it as a type.
+
+e.g.
+```scala
+scala> import macrogen.TypeOf._
+import macrogen.TypeOf._
+
+scala> trait A { val i: Int; val j: TypeOf(i) }
+defined trait A
+
+scala> implicitly[TypeOf(Array(42)) =:= Array[Int]]
+res0: =:=[Array[Int],Array[Int]] = <function1>
+```
+
 
 Type Operators
 --------------
