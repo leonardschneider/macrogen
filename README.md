@@ -48,7 +48,7 @@ res4: (Float, Double, Int) = (3.0,2.0,1)
 TraitOf
 -------
 
-The `TraitOf` generic trait allows building a trait from an implementation class. It will export any public val, var or def into inheriting trait. It helps you remove some boilerplate.
+The `TraitOf` generic trait allows building a trait from an implementation class. It will export any public val, var or def into inheriting trait. Get rid of boilerplate.
 
 e.g. from test specs
 ```scala
@@ -116,7 +116,7 @@ When mixing the SelfType trait, a type `Self <:` the inheriting trait is automat
 TypeOf
 ------
 
-This type macro allows to get the type of an expression and use it as a type.
+This type macro gets the type of an expression and allows using it as a type.
 
 e.g.
 ```scala
@@ -139,7 +139,7 @@ their negation `=:!=`, `<:!<`, `>:!>`, `<%!<`.
 
 It also brings way to combine those thanks to `!:!` (type negation), `&:&` and `|:|`.
 
-Example RELP session.
+Example REPL session.
 
 ```scala
 scala> import macrogen.TypeOperators._
@@ -161,6 +161,37 @@ scala> implicitly[A =:!= A_alias] // oops
 <console>:13: error: could not find implicit value for parameter e: macrogen.TypeOperators.=:!=[A,A_alias]
               implicitly[A =:!= A_alias] // oops
 
+```
+
+Constructor[T]
+--------------
+
+With `Constructor` type macro, you can instantiate a generic type in a natural way, without resorting to
+(runtime) reflection.
+
+Example REPL session.
+
+```scala
+scala> import macrogen.Constructor._
+import macrogen.Constructor._
+
+scala> class A
+defined class A
+
+scala> def make[T](implicit ctor: Constructor[T]): T = ctor.make
+make: [T](implicit ctor: macrogen.Constructor.Constructor[T])T
+
+scala> make[A]
+res0: A = A@28dd6524
+
+scala> class B(x: Int)
+defined class B
+
+scala> def make[T](x: Int)(implicit ctor: Constructor[Int => T]): T = ctor.make(x)
+make: [T](x: Int)(implicit ctor: macrogen.Constructor.Constructor[Int => T])T
+
+scala> make[B](42)
+res1: B = B@103dcc33
 ```
 
 
