@@ -184,6 +184,12 @@ make: [T](implicit ctor: macrogen.Constructor.Constructor[T])T
 scala> make[A]
 res0: A = A@28dd6524
 
+scala> trait T
+defined trait T
+
+scala> make[A with T]
+res1: A with T = $anon$1$anon1$1@20ccd7c
+
 scala> class B(x: Int)
 defined class B
 
@@ -191,7 +197,10 @@ scala> def make[T](x: Int)(implicit ctor: Constructor[Int => T]): T = ctor.make(
 make: [T](x: Int)(implicit ctor: macrogen.Constructor.Constructor[Int => T])T
 
 scala> make[B](42)
-res1: B = B@103dcc33
+res2: B = B@103dcc33
+
+scala> make[B with T](42)
+res3: B with T = $anon$1$$anonfun$make$1$anon1$1@b17a1f2
 ```
 
 
