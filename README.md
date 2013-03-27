@@ -169,7 +169,15 @@ Constructor[T]
 With `Constructor` type macro, you can instantiate a generic type in a natural way, without resorting to
 (runtime) reflection.
 
-Example REPL session.
+Many ran into the following kind of issue.
+```scala
+scala> def f[T](/* ... */) = /* ... */ new T /* ... */
+<console>:10: error: class type required but T found
+       def f[T](/* ... */) = /* ... */ new T /* ... */
+                                           ^
+```
+
+`Constructor` helps solving this kind of issues. Here is an example REPL session.
 
 ```scala
 scala> import macrogen.Constructor._
