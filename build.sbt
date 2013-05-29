@@ -1,3 +1,7 @@
+name := "macrogen"
+
+version := "0.2"
+
 scalaVersion in ThisBuild := "2.11.0-SNAPSHOT"
 
 scalaOrganization in ThisBuild := "org.scala-lang.macro-paradise"

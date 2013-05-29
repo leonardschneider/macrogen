@@ -25,11 +25,10 @@ object TraitOf {
 
     //c.echo(NoPosition, "" + decls)
 
+    //c.echo(NoPosition, "macroApplication " + c.macroApplication)
+
     val temp = Template(
-      parents.filter(t => t match {
-        case tq"TraitOf[$t]" => false
-        case _ => /*c.echo(NoPosition, "" + t);*/ true
-      }),
+      parents.filter(t => !t.equalsStructure(c.macroApplication)),
       self,
       defs ++ decls
     )

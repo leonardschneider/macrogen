@@ -18,8 +18,11 @@ object SelfType {
       case ModuleDef(_, name, _) =>
         q"type Self = $name"
     }
+
+    //c.echo(NoPosition, "macroApplication tree\n" + c.macroApplication)
+
     val res = Template(
-      parents.filter(t => !t.equalsStructure(tq"SelfType")),
+      parents.filter(t => !t.equalsStructure(c.macroApplication)),
       self,
       typedef +: defs
     )
