@@ -10,8 +10,6 @@ Any feedback or comment is welcome.
 Tuple
 -----
 
-**WARNING: there are still a few bugs to be ironed out**
-
 `macrogen` provides collection like methods on tuples (`head`, `tail`, `reverse`, `::`, `:+`, `toList`, `map`, `reduceLeft`, `reduceRight`, `foldLeft`, `foldRight`).
 
 In addition, some utility methods are provided for numeric computation: `|+|`, `|-|`, `|*|`, `|/|`.
@@ -44,6 +42,8 @@ res3: (Int, Double, Float) = (2,3.0,4.0)
 scala> tup.reverse
 res4: (Float, Double, Int) = (3.0,2.0,1)
 ```
+
+**Limitation**: still some issues with chaining operations when beginning with append
 
 TraitOf
 -------

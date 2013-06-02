@@ -15,12 +15,18 @@ class TupleTest extends SpecificationWithJUnit {
       1 :: ("two", 3.0) must beEqualTo((1, "two", 3.0))
     }
     
+    /*
+    "chain prepending element" in {
+      "zero" :: 1 :: ("two", 3.0) must beEqualTo(("zero", 1, "two", 3.0))
+    }
+    */
+    
     "append element" in {
       (1, "two") :+ 3.0 must beEqualTo((1, "two", 3.0))
     }
 
-    /* Pending until fixed
-    "append element twice" in {
+    /*
+    "chain appending element" in {
       (1, "two") :+ 3.0 :+ 4 must beEqualTo((1, "two", 3.0, 4))
     }
     */
